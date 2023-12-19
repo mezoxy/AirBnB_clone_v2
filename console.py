@@ -26,7 +26,7 @@ class HBNBCommand(cmd.Cmd):
               }
     cls_att = {'BaseModel': [],
             'User': ['email', 'password', 'first_name', 'last_name'],
-            'Place': ['city_id', 'user_id', 'description', 'number_rooms', 'number_bathrooms', 'max_guest', 'price_by_night', 'latitude', 'longitude', 'amenity_ids'],
+            'Place': ['city_id', 'user_id', 'description', 'number_rooms', 'number_bathrooms', 'max_guest', 'price_by_night', 'latitude', 'longitude', 'amenity_ids', 'name'],
             'State': ['name'], 'City': ['state_id', 'name'],
             'Amenity': ['name'],
             'Review':['place_id', 'user_id', 'text']}
