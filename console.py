@@ -10,6 +10,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -23,6 +24,13 @@ class HBNBCommand(cmd.Cmd):
                'State': State, 'City': City, 'Amenity': Amenity,
                'Review': Review
               }
+    cls_att = {'BaseModel': [],
+            'User': ['email', 'password', 'first_name', 'last_name'],
+            'Place': ['city_id', 'user_id', 'description', 'number_rooms', 'number_bathrooms', 'max_guest', 'price_by_night', 'latitude', 'longitude', 'amenity_ids'],
+            'State': ['name'], 'City': ['state_id', 'name'],
+            'Amenity': ['name'],
+            'Review':['place_id', 'user_id', 'text']}
+
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
              'number_rooms': int, 'number_bathrooms': int,
@@ -118,12 +126,21 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print("** class name missing **")
             return
-        elif args not in HBNBCommand.classes:
+        elif args.split()[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
-        new_instance = HBNBCommand.classes[args]()
+        new_obj = HBNBCommand.classes[args.split()[0]]()
+        if args.split()[0] in self.cls_att:
+            for att in self.cls_att[args.split()[0]]:
+                patern = re.compile(rf'{att}="*([0-9.a-zA-Z_\-]*)')
+                match = re.search(patern, args)
+                if match:
+                    try:
+                        setattr(new_obj, att, eval(match.group(1)))
+                    except:
+                        setattr(new_obj, att, match.group(1))
         storage.save()
-        print(new_instance.id)
+        print(new_obj.id)
         storage.save()
 
     def help_create(self):
