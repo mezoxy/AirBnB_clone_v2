@@ -130,6 +130,8 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_obj = HBNBCommand.classes[args.split()[0]]()
+        storage.save()
+
         if args.split()[0] in self.cls_att:
             for att in self.cls_att[args.split()[0]]:
                 patern = re.compile(rf'{att}="*([0-9.a-zA-Z_\-]*)')
@@ -138,9 +140,9 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         setattr(new_obj, att, eval(match.group(1)))
                     except:
-                        setattr(new_obj, att, match.group(1))
-        storage.save()
+                        setattr(new_obj, att, match.group(1).replace("_", " "))
         print(new_obj.id)
+        print(new_obj)
         storage.save()
 
     def help_create(self):
