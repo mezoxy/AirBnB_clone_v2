@@ -142,7 +142,6 @@ class HBNBCommand(cmd.Cmd):
                     except:
                         setattr(new_obj, att, match.group(1).replace("_", " "))
         print(new_obj.id)
-        print(new_obj)
         storage.save()
 
     def help_create(self):
