@@ -145,7 +145,7 @@ class HBNBCommand(cmd.Cmd):
         new_obj = HBNBCommand.classes[args.split()[0]]()
         storage.save()
 
-        if args.split()[0] in self.cls_att:
+        if args.split()[0] in self.cls_att and args.split()[0] != 'BaseModel':
             for att in self.cls_att[args.split()[0]]:
                 patern = re.compile(rf'{att}="*([0-9.a-zA-Z_\-]*)')
                 match = re.search(patern, args)
