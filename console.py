@@ -140,7 +140,10 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         setattr(new_obj, att, eval(match.group(1)))
                     except:
-                        setattr(new_obj, att, match.group(1).replace("_", " "))
+                        if att != 'email':
+                            setattr(new_obj, att, match.group(1).replace("_", " "))
+                        else:
+                            setattr(new_obj, att, match.group(1))
         print(new_obj.id)
         storage.save()
 
