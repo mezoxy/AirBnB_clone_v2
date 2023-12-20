@@ -9,6 +9,7 @@ class FileStorage:
     __objects = {}
 
     def delete(self, obj=None):
+        """A public instance method to delete obj from __objects"""
         if obj:
             for key, val in self.__objects.items():
                 if obj == val:
@@ -20,7 +21,7 @@ class FileStorage:
         """Returns a dictionary of models currently in storage"""
         all_obj = {}
         for key, value in FileStorage.__objects.items():
-            if isinstance(value, cls):
+            if cls == value.to_dict()['__class__']:
                 all_obj[key] = value
         return all_obj
         #return FileStorage.__objects
