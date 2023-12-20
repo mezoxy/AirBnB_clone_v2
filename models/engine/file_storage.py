@@ -14,16 +14,16 @@ class FileStorage:
             for key, val in self.__objects.items():
                 if obj == val:
                     del  self.__objects[key]
-                    self.save()
                     return
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         all_obj = {}
-        for key, value in FileStorage.__objects.items():
-            if cls == value.to_dict()['__class__']:
-                all_obj[key] = value
-        return all_obj
+        if cls:
+            for key, value in FileStorage.__objects.items():
+                if isinstance(value, cls):
+                    all_obj[key] = value
+            return all_obj
         return FileStorage.__objects
 
     def new(self, obj):
