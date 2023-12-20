@@ -24,7 +24,7 @@ class FileStorage:
             if cls == value.to_dict()['__class__']:
                 all_obj[key] = value
         return all_obj
-        #return FileStorage.__objects
+        return FileStorage.__objects
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
