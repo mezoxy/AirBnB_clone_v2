@@ -21,7 +21,7 @@ class FileStorage:
         all_obj = {}
         if cls:
             for key, value in FileStorage.__objects.items():
-                if isinstance(value, cls):
+                if cls.__name__ == value.to_dict()['__class__']:
                     all_obj[key] = value
             return all_obj
         return FileStorage.__objects
