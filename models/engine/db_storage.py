@@ -2,9 +2,9 @@
 """DBStorage"""
 
 
-from sqlachemy import create_engine
-from sqlachemy.orm import sessionmaker, scoped_session
-from models.BaseModel import Base
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, scoped_session
+from models.base_model import Base
 import os
 
 var_env = os.environ.get('HBNB_ENV')
@@ -32,12 +32,12 @@ class DBStorage:
         classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
         all_objts = {}
         if cls:
-            return {str(cls) + '.' + str(_id):  obj for _id, obj self.__session.\
+            return {str(cls) + '.' + str(_id):  obj for _id, obj in self.__session.\
                     query(cls.id, cls).all()}
         else:
             for cls_ in classes:
                 all_objts.update(
-                        {cls_ + '.' + str(_id):  obj for _id, obj self.__session.\
+                        {cls_ + '.' + str(_id):  obj for _id, obj in self.__session.\
                             query(eval(cls_).id, eval(cls_)).all()})
 
             return all_objts
