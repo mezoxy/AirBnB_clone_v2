@@ -7,11 +7,6 @@ from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
 from os import getenv
 
-var_env = getenv('HBNB_ENV')
-user = getenv('HBNB_MYSQL_USER')
-psw = getenv('HBNB_MYSQL_PWD')
-sqlhost = getenv('HBNB_MYSQL_HOST')
-dbname = getenv('HBNB_MYSQL_DB')
 
 class DBStorage:
     """class for mysqldb"""
@@ -20,9 +15,14 @@ class DBStorage:
 
     def __init__(self):
         """The consructor: create the engine"""
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user,
-            psw, sqlhost, dbname), pool_pre_ping=True)
-        if var_env == 'test':
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            getenv('HBNB_MYSQL_USER'),
+            getenv('HBNB_MYSQL_PWD'),
+            getenv('HBNB_MYSQL_HOST'),
+            getenv('HBNB_MYSQL_DB')),
+            pool_pre_ping=True)
+
+        if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(bind=self.__engine)
         else:
             Base.metadata.create_all(bind=self.__engine)
