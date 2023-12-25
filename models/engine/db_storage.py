@@ -5,6 +5,12 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
+from models.user import User
+from models.place import Place
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.review import Review
 from os import getenv
 
 
@@ -24,20 +30,18 @@ class DBStorage:
 
         if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(bind=self.__engine)
-        else:
-            Base.metadata.create_all(bind=self.__engine)
 
     def all(self, cls=None):
         """uery on the current database session depending of the class name"""
         classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
         all_objts = {}
         if cls:
-            return {str(cls) + '.' + str(_id):  obj for _id, obj in self.__session.\
+            return {cls.__name__ + '.' + str(_id): obj for _id, obj in self.__session.\
                     query(cls.id, cls).all()}
         else:
             for cls_ in classes:
                 all_objts.update(
-                        {cls_ + '.' + str(_id):  obj for _id, obj in self.__session.\
+                        {cls_ + '.' + str(_id): obj for _id, obj in self.__session.\
                             query(eval(cls_).id, eval(cls_)).all()})
 
             return all_objts
@@ -59,6 +63,6 @@ class DBStorage:
     def reload(self):
         """Create all tables"""
         Base.metadata.create_all(bind=self.__engine)
-        session_factory = sessionmaker(bind=engine, expire_on_commit = False)
+        session_factory = sessionmaker(bind=self.__engine, expire_on_commit = False)
         Session = scoped_session(session_factory)
         self.__session = Session()
