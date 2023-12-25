@@ -17,6 +17,5 @@ class State(BaseModel, Base):
         """Getter attribute cities that returns the list of City instances 
             with state_id equals to the current State.id
         """
-        pass
-        #from models import storage
-        #return [obj for obj in storage.all(City) if self.id == obj.state_id]
+        from models import storage
+        return [obj for obj in storage.all(City) if self.id == obj.state_id]
