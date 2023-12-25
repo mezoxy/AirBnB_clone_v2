@@ -5,13 +5,13 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from models.base_model import Base
-import os
+from os import getenv
 
-var_env = os.environ.get('HBNB_ENV')
-user = os.environ.get('HBNB_MYSQL_USER')
-psw = os.environ.get('HBNB_MYSQL_PWD')
-sqlhost = os.environ.get('HBNB_MYSQL_HOST')
-dbname = os.environ.get('HBNB_MYSQL_DB')
+var_env = getenv('HBNB_ENV')
+user = getenv('HBNB_MYSQL_USER')
+psw = getenv('HBNB_MYSQL_PWD')
+sqlhost = getenv('HBNB_MYSQL_HOST')
+dbname = getenv('HBNB_MYSQL_DB')
 
 class DBStorage:
     """class for mysqldb"""
@@ -20,7 +20,7 @@ class DBStorage:
 
     def __init__(self):
         """The consructor: create the engine"""
-        self.__engine = create_engine('mysql+mysqlb://{}:{}@{}/{}'.format(user,
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user,
             psw, sqlhost, dbname), pool_pre_ping=True)
         if var_env == 'test':
             Base.metadata.drop_all(bind=self.__engine)
@@ -60,4 +60,5 @@ class DBStorage:
         """Create all tables"""
         Base.metadata.create_all(bind=self.__engine)
         session_factory = sessionmaker(bind=engine, expire_on_commit = False)
-        self.__session = scoped_session(session_factory)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
