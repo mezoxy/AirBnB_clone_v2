@@ -142,7 +142,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_obj = HBNBCommand.classes[args.split()[0]]()
-        storage.new()
+        storage.new(new_obj)
         storage.save()
 
         if args.split()[0] in self.cls_att and args.split()[0] != 'BaseModel':
