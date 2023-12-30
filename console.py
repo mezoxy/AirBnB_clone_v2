@@ -24,25 +24,6 @@ class HBNBCommand(cmd.Cmd):
                'State': State, 'City': City, 'Amenity': Amenity,
                'Review': Review
               }
-    cls_att = {
-            'BaseModel': [],
-            'User': ['email', 'password', 'first_name', 'last_name'],
-            'Place': [
-                'city_id',
-                'user_id',
-                'description',
-                'number_rooms',
-                'number_bathrooms',
-                'max_guest',
-                'price_by_night',
-                'latitude',
-                'longitude',
-                'amenity_ids',
-                'name'],
-            'State': ['name'], 'City': ['state_id', 'name'],
-            'Amenity': ['name'],
-            'Review': ['place_id', 'user_id', 'text']}
-
     dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
     types = {
              'number_rooms': int, 'number_bathrooms': int,
@@ -142,20 +123,15 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_obj = HBNBCommand.classes[args.split()[0]]()
+        patern = r'([a-z_]*)="*([\da-z_A-Z.\-]*)'
+        match = re.findall(patern, args)
+        for att, val in match:
+            try:
+                setattr(new_obj, att, eval(val))
+            except Exception:
+                setattr(new_obj, att, val)
         storage.new(new_obj)
         storage.save()
-
-        if args.split()[0] in self.cls_att and args.split()[0] != 'BaseModel':
-            for att in self.cls_att[args.split()[0]]:
-                patern = re.compile(rf'{att}="*([0-9.a-zA-Z_\-]*)')
-                match = re.search(patern, args)
-                if match:
-                    try:
-                        setattr(new_obj, att, eval(match.group(1)))
-
-                    except Exception:
-                        setattr(new_obj, att, match.group(1).replace(
-                            "_", " ").replace('"', "\\"))
         print(new_obj.id)
         storage.save()
 
