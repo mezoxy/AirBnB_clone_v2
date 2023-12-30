@@ -129,7 +129,7 @@ class HBNBCommand(cmd.Cmd):
             try:
                 setattr(new_obj, att, eval(val))
             except Exception:
-                setattr(new_obj, att, val)
+                setattr(new_obj, att, val.replace("_", ' ').replace('"', '\\'))
         storage.new(new_obj)
         storage.save()
         print(new_obj.id)
