@@ -45,16 +45,15 @@ class BaseModel:
 
     def to_dict(self):
         """Convert instance into dict format"""
-        dictionary = {}
-        dictionary.update(self.__dict__)
-        if '_sa_instance_state' in dictionary:
-            del (dictionary['_sa_instance_state'])
+        from sqlalchemy.orm import attributes
+        dictionary = attributes.instance_dict(self)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
+        dictionary.pop('_sa_instance_state', None)
         return dictionary
-
+        
     def delete(self):
         """A public method to delete an object"""
         from models import storage
