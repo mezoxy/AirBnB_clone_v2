@@ -36,8 +36,8 @@ class DBStorage:
         classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
         all_objts = {}
         if cls:
-            return {cls.__name__ + '.' + str(_id): obj for _id, obj in self.__session.\
-                    query(cls.id, cls).all()}
+            return {cls.__name__ + '.' + str(obj.id): obj for obj in self.__session.\
+                    query(cls).all()}
         else:
             for cls_ in classes:
                 all_objts.update(
