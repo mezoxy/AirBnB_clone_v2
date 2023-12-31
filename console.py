@@ -123,7 +123,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
         new_obj = HBNBCommand.classes[args.split()[0]]()
-        patern = r'([a-z_]*)="*([\da-z_A-Z.\-]*)'
+        patern = r'([a-z_]*)="*([\da-z_A-Z.@\-]*)'
         match = re.findall(patern, args)
         for att, val in match:
             try:
