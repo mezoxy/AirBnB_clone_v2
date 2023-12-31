@@ -19,9 +19,4 @@ class State(BaseModel, Base):
             with state_id equals to the current State.id
         """
         from models import storage
-        lis = []
-        for obj in storage.all(City):
-            if obj.id == self.id:
-                lis.append(obj)
-        return lis
-        #return [obj for obj in storage.all(City) if self.id == obj.state_id]
+        return [obj for obj in storage.all(City) if self.id == obj.state_id]
