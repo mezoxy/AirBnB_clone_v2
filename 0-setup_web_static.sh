@@ -2,6 +2,7 @@
 # Set up your web servers for the deployment of web_static
 sudo apt-get update -y
 sudo apt-get install -y nginx
+sudo service nginx start
 mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 echo 'Hi Dear' > /data/web_static/releases/test/index.html
 ln -sf /data/web_static/releases/test/ /data/web_static/current
