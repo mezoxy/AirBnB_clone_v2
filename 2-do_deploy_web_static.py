@@ -17,22 +17,17 @@ def do_deploy(archive_path):
     """
     if exists(archive_path):
         name_dir = re.match(r'.*(web_static_\d*)', archive_path).group(1)
-        upload = put(archive_path, "/tmp/")
-        if upload.failed:
+        if put(archive_path, "/tmp/").failed:
             return False
-        res = run(f"mkdir -p /data/web_static/releases/{name_dir}/")
-        if res.failed:
+        if run(f"mkdir -p /data/web_static/releases/{name_dir}/").failed:
             return False
-        res = run(f"mkdir -p /data/web_static/current/")
-        with cd("/data/web_static/releases/"):
-            cmd = f"tar -xzf /tmp/{name_dir}.tgz -C {name_dir}"
-            res1 = run(cmd)
-            if res1.failed:
-                return False
-            run(f"rm /tmp/{name_dir}.tgz")
-            res2 = run(f"ln -sf {name_dir} /data/web_static/current")
-            if res2.failed:
-                return False
+        location = f"/data/web_static/releases/{name_dir}"
+        if run(f"tar -xzf /tmp/{name_dir}.tgz -C {location}").failed:
+            return False
+        if run(f"rm /tmp/{name_dir}.tgz").failed:
+            return False
+        if run(f"ln -sf {location} /data/web_static/current").failed:
+            return False
         return True
     else:
         return False
