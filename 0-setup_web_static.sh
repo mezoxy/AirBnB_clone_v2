@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Set up your web servers for the deployment of web_static
-sudo apt-get update -y
-sudo apt-get install -y nginx
-sudo service nginx start
+apt-get update -y
+apt-get install -y nginx
+service nginx start
 mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 chown -hR ubuntu:ubuntu /data/
 echo "<h1>Hi Dear, I'm Ayoub</h1>" > /data/web_static/releases/test/index.html
