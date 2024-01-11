@@ -16,7 +16,7 @@ def do_deploy(archive_path):
     """
     if archive_path:
         name_file = re.match(r'.*(web_static_\d*)', archive_path).group(1)
-        upload = put(archive_path, '/tmp')
+        upload = put(name_file, '/tmp')
         if upload.failed:
             return False
         res = run("mkdir -p /data/web_static/releases/")
