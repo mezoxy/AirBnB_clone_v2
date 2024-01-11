@@ -29,8 +29,8 @@ def do_deploy(archive_path):
             res1 = run(cmd)
             if res1.failed:
                 return False
-            run(f"rm /tmp/{name_file}.tgz")
-            res2 = run(f"ln -sf {name_file} /data/web_static/current")
+            run(f"rm /tmp/{name_dir}.tgz")
+            res2 = run(f"ln -sf {name_dir} /data/web_static/current")
             if res2.failed:
                 return False
         return True
