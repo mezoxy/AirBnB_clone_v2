@@ -26,6 +26,8 @@ def do_deploy(archive_path):
             return False
         if run(f"rm /tmp/{name_dir}.tgz").failed:
             return False
+        if run(f"mv {location}/web_static/* {location}").failed:
+            return False
         if run(f"ln -sf {location} /data/web_static/current").failed:
             return False
         return True
