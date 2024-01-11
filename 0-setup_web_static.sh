@@ -3,7 +3,7 @@
 sudo apt update -y
 sudo apt install -y nginx
 sudo service nginx start
-mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
+sudo mkdir -p /data/web_static/releases/test/ /data/web_static/shared/
 sudo chown -R ubuntu:ubuntu /data/
 echo "Hi Dear, I'm Ayoub" > /data/web_static/releases/test/index.html
 sudo ln -s /data/web_static/releases/test/ /data/web_static/current
