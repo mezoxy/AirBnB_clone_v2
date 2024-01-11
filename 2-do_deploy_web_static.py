@@ -3,15 +3,16 @@
 
 
 from fabric.api import put, run, sudo, env, cd
+import re
+
 
 env.hosts = ['54.237.35.210', '34.239.107.142']
 
 
 def do_deploy(archive_path):
-    import re
     """
         Function: do_deploy
-        Returns False if the file at the path archive_path doesn’t exist
+        Returns False if the file at the path archive_path
     """
     if archive_path:
         name_file = re.match(r'.*(web_static_\d*)', archive_path).group(1)
@@ -22,7 +23,9 @@ def do_deploy(archive_path):
         if res.failed:
             return False
         with cd("/data/web_static/releases/"):
-            res1 = run(f"mkdir -p {name_file} && tar -xvf /tmp/{name_file}.tgz -C {name_file}")
+            first = f"mkdir -p {name_file} && "
+            scnd = f"tar -xvf /tmp/{name_file}.tgz -C {name_file}"
+            res1 = run(first + scnd)
             if res1.failed:
                 return False
             run(f"rm /tmp/{name_file}.tgz")
@@ -32,4 +35,3 @@ def do_deploy(archive_path):
         return True
     else:
         return False
-
