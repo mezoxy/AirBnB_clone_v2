@@ -22,17 +22,17 @@ def do_deploy(archive_path):
         if run(f"mkdir -p /data/web_static/releases/{name_dir}/").failed:
             return False
         location = f"/data/web_static/releases/{name_dir}"
-        if run(f"tar -xzf /tmp/{name_dir}.tgz -C {location}/").failed:
+        if run(f"tar -xzf /tmp/{name_dir}.tgz -C {location}").failed:
             return False
         if run(f"rm /tmp/{name_dir}.tgz").failed:
             return False
-        if run(f"mv {location}/web_static/* {location}").failed:
+        if run(f"mv {location}/web_static/* {location}/").failed:
             return False
         if run(f"rm -rf {location}/web_static").failed:
             return False
         if run(f"rm -rf /data/web_static/current").failed:
             return False
-        if run(f"ln -sf {location} /data/web_static/current").failed:
+        if run(f"ln -s {location}/ /data/web_static/current").failed:
             return False
         return True
     else:
