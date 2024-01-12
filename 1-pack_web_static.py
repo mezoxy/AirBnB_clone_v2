@@ -15,6 +15,7 @@ def do_pack():
     creat = "mkdir -p ./versions/ && "
     tar_cmd = "tar -cvzf versions/web_static_{}.tgz web_static".format(time)
     cmd = creat + tar_cmd
-    if local(cmd).failed:
-        return None
-    return "versions/web_static_{}.tgz".format(time)
+    val = local(cmd)
+    if val.succeeded:
+        return "versions/web_static_{}.tgz".format(time)
+    return None
