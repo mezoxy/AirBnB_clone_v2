@@ -51,4 +51,6 @@ def do_deploy(archive_path):
 def deploy():
     """
         Function: deploy
-        Returns: The value of 
+        Returns: The value of do_deploy
+    """
+    return do_deploy(do_pack())
