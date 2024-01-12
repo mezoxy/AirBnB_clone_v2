@@ -9,31 +9,24 @@ from os.path import exists
 
 env.hosts = ['54.237.35.210', '34.239.107.142']
 
-
 def do_deploy(archive_path):
+    """ distributes an archive to my web servers
     """
-        Function: do_deploy
-        Returns False if the file at the path archive_path
-    """
-    if exists(archive_path):
-        name_dir = re.match(r'.*(web_static_\d*)', archive_path).group(1)
-        if put(archive_path, "/tmp/").failed:
-            return False
-        if run(f"mkdir -p /data/web_static/releases/{name_dir}/").failed:
-            return False
-        location = f"/data/web_static/releases/{name_dir}"
-        if run(f"tar -xzf /tmp/{name_dir}.tgz -C {location}/").failed:
-            return False
-        if run(f"rm /tmp/{name_dir}.tgz").failed:
-            return False
-        if run(f"mv {location}/web_static/* {location}").failed:
-            return False
-        if run(f"rm -rf {location}/web_static").failed:
-            return False
-        if run(f"rm -rf /data/web_static/current").failed:
-            return False
-        if run(f"ln -sf {location} /data/web_static/current").failed:
-            return False
+    if exists(archive_path) is False:
+        return False  # Returns False if the file at archive_path doesnt exist
+    filename = archive_path.split('/')[-1]
+    no_tgz = '/data/web_static/releases/' + "{}".format(filename.split('.')[0])
+    tmp = "/tmp/" + filename
+
+    try:
+        put(archive_path, "/tmp/")
+        run("mkdir -p {}/".format(no_tgz))
+        run("tar -xzf {} -C {}/".format(tmp, no_tgz))
+        run("rm {}".format(tmp))
+        run("mv {}/web_static/* {}/".format(no_tgz, no_tgz))
+        run("rm -rf {}/web_static".format(no_tgz))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {}/ /data/web_static/current".format(no_tgz))
         return True
-    else:
+    except:
         return False
