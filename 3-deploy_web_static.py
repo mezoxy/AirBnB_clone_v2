@@ -54,7 +54,4 @@ def deploy():
         Function: deploy
         Returns: The value of do_deploy
     """
-    path = do_pack()
-    if exists(path):
-        return do_deploy(do_pack())
-    return False
+    return do_deploy(do_pack())
