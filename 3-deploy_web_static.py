@@ -48,6 +48,7 @@ def do_deploy(archive_path):
     else:
         return False
 
+
 def deploy():
     """
         Function: deploy
