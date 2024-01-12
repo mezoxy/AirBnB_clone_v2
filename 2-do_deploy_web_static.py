@@ -17,23 +17,17 @@ def do_deploy(archive_path):
     """
     if exists(archive_path):
         name_dir = re.match(r'.*(web_static_\d*)', archive_path).group(1)
-        if put(archive_path, "/tmp/").failed:
+        try:
+            put(archive_path, "/tmp/")
+            run(f"sudo mkdir -p /data/web_static/releases/{name_dir}/")
+            location = f"/data/web_static/releases/{name_dir}"
+            run(f"sudo tar -xzf /tmp/{name_dir}.tgz -C {location}")
+            run(f"sudo rm /tmp/{name_dir}.tgz")
+            run(f"sudo mv {location}/web_static/* {location}/")
+            run(f"sudo rm -rf {location}/web_static")
+            run(f"sudo rm -rf /data/web_static/current")
+            run(f"sudo ln -s {location}/ /data/web_static/current")
+        except:
             return False
-        if run(f"sudo mkdir -p /data/web_static/releases/{name_dir}/").failed:
-            return False
-        location = f"/data/web_static/releases/{name_dir}"
-        if run(f"sudo tar -xzf /tmp/{name_dir}.tgz -C {location}").failed:
-            return False
-        if run(f"sudo rm /tmp/{name_dir}.tgz").failed:
-            return False
-        if run(f"sudo mv {location}/web_static/* {location}/").failed:
-            return False
-        if run(f"sudo rm -rf {location}/web_static").failed:
-            return False
-        if run(f"sudo rm -rf /data/web_static/current").failed:
-            return False
-        if run(f"sudo ln -s {location}/ /data/web_static/current").failed:
-            return False
-        return True
     else:
         return False
