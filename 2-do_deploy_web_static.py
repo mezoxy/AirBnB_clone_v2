@@ -27,7 +27,7 @@ def do_deploy(archive_path):
             run(f"sudo rm -rf {location}/web_static")
             run(f"sudo rm -rf /data/web_static/current")
             run(f"sudo ln -s {location}/ /data/web_static/current")
-        except:
+        except Exception:
             return False
     else:
         return False
