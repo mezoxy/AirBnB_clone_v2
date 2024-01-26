@@ -17,5 +17,21 @@ def hbn():
     return "Hello HBNB!"
 
 
+@app.route("/hbnb")
+def Hbn():
+    """
+        Hbn: A function that returns HBNB
+    """
+    return "HBNB"
+
+
+@app.route("/c/<text>")
+def CisFun(text=None):
+    """
+        cisFun: A function that display “C ” followed by the text
+    """
+    return "C {}".format(" ".join(text.split("_")))
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
