@@ -14,13 +14,13 @@ class State(BaseModel, Base):
     cities = relationship(
             'City', backref='state', cascade='all, delete-orphan')
 
-    @property
-    def cities(self):
-        """Getter attribute cities that returns
-            the list of City instances
-            with state_id equals to the current State.id
-        """
-        from models import storage
-        if getenv('HBNB_TYPE_STORAGE') != 'db':
-            return [obj for obj in storage.all(
-                City) if self.id == obj.state_id]
+    if getenv('HBNB_TYPE_STORAGE') != 'db':
+        @property
+        def cities(self):
+            """Getter attribute cities that returns
+                the list of City instances
+                with state_id equals to the current State.id
+            """
+            if getenv('HBNB_TYPE_STORAGE') != 'db':
+                return [obj for obj in storage.all(
+                    City) if self.id == obj.state_id]
