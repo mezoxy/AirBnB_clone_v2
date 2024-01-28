@@ -19,4 +19,5 @@ class State(BaseModel, Base):
             with state_id equals to the current State.id
         """
         from models import storage
-        return [obj for obj in storage.all(City) if self.id == obj.state_id]
+        if getenv('HBNB_TYPE_STORAGE') != 'db':
+            return [obj for obj in storage.all(City) if self.id == obj.state_id]
