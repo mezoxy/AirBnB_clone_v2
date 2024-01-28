@@ -36,13 +36,16 @@ class DBStorage:
         classes = ['User', 'State', 'City', 'Amenity', 'Place', 'Review']
         all_objts = {}
         if cls:
-            return {cls.__name__ + '.' + str(obj.id): obj for obj in self.__session.\
-                    query(cls).all()}
+            return {
+                    cls.__name__ + '.' + str(
+                        obj.id): obj for obj in self.__session.query(
+                            cls).all()}
         else:
             for cls_ in classes:
                 all_objts.update(
-                        {cls_ + '.' + str(_id): obj for _id, obj in self.__session.\
-                            query(eval(cls_).id, eval(cls_)).all()})
+                        {cls_ + '.' + str(
+                            _id): obj for _id, obj in self.__session.query(
+                                eval(cls_).id, eval(cls_)).all()})
 
             return all_objts
 
@@ -63,9 +66,10 @@ class DBStorage:
     def reload(self):
         """Create all tables"""
         Base.metadata.create_all(bind=self.__engine)
-        session_factory = sessionmaker(bind=self.__engine, expire_on_commit = False)
+        session_factory = sessionmaker(
+                bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(session_factory)
-        self.__session = Session()
+        self.__session = Session
 
     def close(self):
         """
