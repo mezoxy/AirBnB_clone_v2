@@ -60,7 +60,7 @@ class DBStorage:
     def delete(self, obj=None):
         """To delete an obj"""
         if obj:
-            self.__session.delete(obj)#self.__session.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
         """Create all tables"""
