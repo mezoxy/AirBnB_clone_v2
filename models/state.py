@@ -23,4 +23,5 @@ class State(BaseModel, Base):
         """
         from models import storage
         if getenv('HBNB_TYPE_STORAGE') != 'db':
-            return [obj for obj in storage.all(City).values() if self.id == obj.state_id]
+            return [obj for obj in storage.all(
+                City).values() if self.id == obj.state_id]
