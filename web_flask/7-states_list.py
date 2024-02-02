@@ -20,7 +20,7 @@ def states():
 
 
 @app.teardown_appcontext
-def closeDb(exception):
+def teardown_db(exception):
     """
         A function to close connection
     """
