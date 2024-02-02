@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<HTML lang="en">
+	<HEAD>HBNB</HEAD>
+	<BODY>
+		<H1>States</H1>
+		<UL>
+			{% for key, val in dic.items() %}
+			{{ key.slpit('.')[0] + ":", val }}
+			{% endfor %}
+		</UL>		
+	</BODY>
+</HTML>
