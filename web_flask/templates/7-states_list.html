@@ -3,10 +3,8 @@
 	<HEAD>HBNB</HEAD>
 	<BODY>
 		<H1>States</H1>
-		<UL>
-			{% for key, val in dic.items() %}
-			{{ key.slpit('.')[0] + ":", val }}
+			{% for val in dic %}
+			<UL>{{ val.id }}:  <B>{{ val.name }}</B></UL>
 			{% endfor %}
-		</UL>		
 	</BODY>
 </HTML>
