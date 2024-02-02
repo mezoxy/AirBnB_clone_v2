@@ -3,8 +3,10 @@
 	<HEAD>HBNB</HEAD>
 	<BODY>
 		<H1>States</H1>
+		<UL>
 			{% for val in dic %}
-			<UL>{{ val.id }}:  <B>{{ val.name }}</B></UL>
+			<LI>{{ val.id }}: <B>{{ val.name }}</B></LI>
 			{% endfor %}
+		</UL>
 	</BODY>
 </HTML>
