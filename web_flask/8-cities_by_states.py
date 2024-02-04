@@ -16,15 +16,10 @@ app.url_map.strict_slashes = False
 @app.route('/cities_by_states')
 def states():
     """A function that returns all the states"""
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
-        pass
-        #Tinking what to do later
-
-    else:
-        list_states = sorted(list(storage.all(State).values()), key=lambda x: x.name if x.name)
-        dic_city = {}
-        for state in list_states:
-            dic_city[state] = sorted([city for city in state.cities], key=lambda x: x.name if x.name)
+    list_states = sorted(list(storage.all(State).values()), key=lambda x: x.name if x.name)
+    dic_city = {}
+    for state in list_states:
+        dic_city[state] = sorted([city for city in state.cities], key=lambda x: x.name if x.name)
     return render_template('8-cities_by_states.html', dic=dic_city)
 
 
