@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<HTML lang="en">
+	<HEAD>
+		<TITLE>HBNB</TITLE>
+	</HEAD>
+	<BODY>
+		<H1>States</H1>
+		<UL>
+
+			{% for key, val in dic.items() %}
+			<LI>{{ key.id }}: <B>key.name</B>
+			<UL>
+
+				{% for city in val %}
+				<LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
+				{% endfor %}
+			</UL>
+			</Li>
+			{% endfor %}
+		</UL>
+	</BODY>
+</HTML>

@@ -6,6 +6,7 @@ from flask import Flask as f
 from models import storage
 from models.state import State
 from flask import render_template
+from os import getenv
 
 
 app = f(__name__)
@@ -15,8 +16,16 @@ app.url_map.strict_slashes = False
 @app.route('/cities_by_states')
 def states():
     """A function that returns all the states"""
-    dic = sorted(list(storage.all(State).values()), key=lambda x: x.name)
-    return render_template('7-states_list.html', dic=dic)
+    if getenv('HBNB_TYPE_STORAGE') == 'db':
+        pass
+        #Tinking what to do later
+
+    else:
+        list_states = sorted(list(storage.all(State).values()), key=lambda x: x.name if x.name)
+        dic_city = {}
+        for state in list_states:
+            dic_city[state] = sorted([city for city in state.cities], key=lambda x: x.name if x.name)
+    return render_template('8-cities_by_states.html', dic=dic_city)
 
 
 @app.teardown_appcontext
